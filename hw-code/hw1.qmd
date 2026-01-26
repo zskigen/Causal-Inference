@@ -4,23 +4,44 @@ format: pdf
 editor: visual
 ---
 
-## Quarto
+# HW 1
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+## 2b
 
-## Running Code
-
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
-
-```{r}
-1 + 1
+```{r, include = FALSE}
+library(tidyverse)
 ```
 
-You can add options to executable code like this
+```{r simulation}
+X_i <- rnorm(10000, 0, 5)
 
-```{r}
-#| echo: false
-2 * 2
+e_i <- rnorm(10000, 0, 1)
+
+Y_i0 <- 2 * X_i + e_i
+
+Y_i1 <- Y_i0 - 1
+
+p_i <- 1 / (1 + exp(-X_i))
+
+W_i <- rbinom(10000, 1, p_i)
+
+Y_i <- W_i * Y_i1 + (1 - W_i) * Y_i0
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+```{r plot}
+df <- data.frame(
+  X = X_i,
+  Y = Y_i,
+  W = W_i
+)
+
+df |>
+  ggplot(df, x = X, y = Y, color = factor (W)) +
+  geom_point(alpha = 0.5) + 
+  labs(x = "X (Covaritate)", y = "Observed Outcome Y", color = "Treatment") +
+  theme_minimal()
+
+ggsave("plot1.pdf", width = 7, height = 5)
+
+```
+
