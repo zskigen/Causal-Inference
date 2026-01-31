@@ -1,0 +1,44 @@
+---
+title: "HW2"
+format: pdf
+editor: visual
+---git 
+---
+
+```{r}
+library(tidyverse)
+```
+
+# 1) 
+
+## a)
+
+```{r}
+sleep_data <- datasets::sleep
+```
+
+```{r}
+y_bar_1 <- sleep_data |>
+  filter(group == 2) |>
+  summarize(y_bar_1 = mean(extra))
+
+y_bar_0 <- sleep_data |>
+  filter(group == 1) |>
+  summarize(y_bar_0 = mean(extra))
+  
+tau_hat <- y_bar_1 - y_bar_0
+
+```
+## b) Conservative variance estimator
+
+```{r}
+#S_1^2
+N1 <- sum(sleep_data$group == 2)
+N1
+
+N1 <- sum(sleep_data$group == 2)
+
+  
+s_1 <- 
+```
+
